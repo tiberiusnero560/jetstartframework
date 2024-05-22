@@ -91,3 +91,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Add documentation pages (privacy policy and terms of service)
+  add-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Add Privacy Policy and Terms of Service
+        run: |
+          echo "---\ntitle: Privacy Policy\n---\n\n# Privacy Policy\n\nYour privacy is important to us. It is Jetstart-Framework's policy to respect your privacy regarding any information we may collect from you across our website, https://tiberiusnero560.github.io/jetstartframework/, and other sites we own and operate.\n\n## Information We Collect\n\n- Personal information you provide to us directly.\n- Log data and analytics tracking information.\n\n## Use of Information\n\nWe use the information we collect in various ways, including to:\n\n- Provide, operate, and maintain our website\n- Improve, personalize, and expand our website\n- Understand and analyze how you use our website\n\n## Changes to This Privacy Policy\n\nWe may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.\n\nThis policy is effective as of 1st January 2024.\n\nIf you have any questions about our Privacy Policy, please contact us at support@jetstartframework.com.\n" > ./privacy-policy.md
+          echo "---\ntitle: Terms of Service\n---\n\n# Terms of Service\n\nWelcome to Jetstart-Framework! These terms and conditions outline the rules and regulations for the use of Jetstart-Framework's Website.\n\nBy accessing this website we assume you accept these terms and conditions. Do not continue to use Jetstart-Framework if you do not agree to take all of the terms and conditions stated on this page.\n\n## Cookies\n\nWe employ the use of cookies. By accessing Jetstart-Framework, you agreed to use cookies in agreement with the Jetstart-Framework's Privacy Policy.\n\n## License\n\nUnless otherwise stated, Jetstart-Framework and/or its licensors own the intellectual property rights for all material on Jetstart-Framework. All intellectual property rights are reserved. You may access this from Jetstart-Framework for your own personal use subjected to restrictions set in these terms and conditions.\n\n## Hyperlinking to Our Content\n\nThe following organizations may link to our Website without prior written approval:\n\n- Government agencies;\n- Search engines;\n- News organizations;\n\n## Changes to These Terms\n\nWe may update our Terms of Service from time to time. We will notify you of any changes by posting the new Terms of Service on this page.\n\nThese terms are effective as of 1st January 2024.\n\nIf you have any questions about our Terms of Service, please contact us at support@jetstartframework.com.\n" > ./terms-of-service.md
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m 'Add privacy policy and terms of service'
+          git push
