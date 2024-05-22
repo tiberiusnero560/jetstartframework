@@ -1,10 +1,29 @@
-import Image from "next/image";
+// app/page.tsx
+
+'use client';
+
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold">Hello, World!</h1>
+  const { data: session, status } = useSession();
 
-    </main>
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+
+  if (session) {
+    return (
+      <>
+        <p>Welcome, {session.user?.email}</p>
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <p>You are not signed in.</p>
+      <button onClick={() => signIn('google')}>Sign in with Google</button>
+    </>
   );
 }
